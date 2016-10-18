@@ -1,0 +1,97 @@
+
+Setting up the arm-utils
+
+
+
+1)Add the PPA and install gcc-arm-embedded    https://launchpad.net/~team-gcc-arm-embedded/+archive/ubuntu/ppa
+2)Download STMCube to generate project blueprint     http://www.st.com/en/development-tools/stm32cubemx.html
+3)Set up code blocks with gcc-arm
+  a)Global compiler settings--->Toolchain Executables--->Program Files
+          C Compiler :- arm-none-eabi-gcc
+          C++        :- arm-none-eabi-g++
+          Linker for Dyn Libs    :- arm-none-eabi-gcc
+          Linker for Static Libs  :- arm-none-eabi-ar
+          Debugger: can be empty for now
+          make program: make
+
+4)Before starting a project, check presence of library for specific MCU. In menu Help->Install New Libraries, check the desired library (in my case STM32L1CB ver 1.5.0). Click in "Install now" to install library on your local repository.
+
+Next project will be for STM32L1 MCU.
+Create new project
+
+There are two possibilities: Create new project
+
+    by selecting MCU,
+    by selecting STM board.
+
+In "New project" dialog choose Series: STM32F0, Lines: STM32F0x0 Value Line. From list choose STM32F030F4Px
+
+For testing purposes, check pin PA0 as GPIO_Output.
+Set project properties
+
+Click on setting of project: menu Project -> Settings...
+
+    Type project name (e.g. InstructableF0)
+    Change project location (if you want)
+    Toolchain / IDE: select SW4STM32
+    Uncheck "Generate Under Root"
+    Click OK
+
+Generate C code
+
+Click Project->Generate code to generate empty project
+
+Building the code
+
+1)http://www.instructables.com/id/Build-a-Program-for-STM32-MCU-Under-Linux/?ALLSTEPS
+
+      >Cube32MX and generate project prototypes
+      >CubeMX2Makefile.py .     to make  makefile
+
+
+2)Follow all the steps and get to build
+
+3)https://sourceforge.net/projects/stm32flash/?source=navbar
+
+
+Flashing the code only
+
+
+4)Navigate to .bin and run
+         stm32flash -w Try1.bin -v -g 0x0 /dev/ttyUSB0
+
+
+
+Debugging and uploading
+With the ST-LINK
+
+
+0)CD to root directory of project
+1)Connect only TMS pin    (numbering format on IMST is Port X4 bottom right pin is pin one, then Bottom left is 2) TMS/SWDIO pin is X4.9  X4.5 is SWCLK and connect ground is pin 2. This is reduced JTAG
+2)Run OpenOCD server script ST_OpenOCD.sh change the code to point to OpenOCD
+3)On another server run gdb debugger. Command :-
+
+                arm-none-eabi-gdb -tui --eval-command="target remote localhost:3333" ./build/program.elf
+
+                Enter till connection is established
+
+4)Target will need reset. In GDB TUI :-
+
+                        monitor reset init
+
+5)Halt the target :-
+                       monitor reset halt
+
+6)Set required break points.
+          Ex, breakpoint on line 99 is
+                    break 99
+          Ex, breakpoint on function initializeUART() is
+                      break initializeUART
+
+7)load the program (.bin file of same name as parameter passed in step 3)
+                        load
+
+8)Continue execution till next breakpoint with:-
+                      cont
+
+9)Step execution with step and so on.
