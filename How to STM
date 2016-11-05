@@ -70,7 +70,7 @@ Disable UART while debugging. No need of reset wire while debugging or flashing 
 
 
 0)CD to root directory of project
-1)Connect only TMS pin    (numbering format on IMST is Port X4 bottom right pin is pin one, then Bottom left is 2) TMS/SWDIO pin is X4.9  X4.5 is SWCLK and connect ground is pin 2. This is reduced JTAG
+1)Connect only TMS pin    (numbering format on IMST is Port X4 bottom right pin is pin one, then Bottom left is 2) TMS/SWDIO pin is X4.9  X4.5 is SWCLK and connect ground  X4.2 This is reduced JTAG
 2)Run OpenOCD server script ST_OpenOCD.sh change the code to point to OpenOCD
 3)On another server run gdb debugger. Command :-
 
