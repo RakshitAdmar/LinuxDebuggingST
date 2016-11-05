@@ -57,7 +57,6 @@ Building the code
 
 Flashing the code only
 
-Connect wire X9 header top to X5header top right
 
 4)Navigate to .bin and run
          stm32flash -w Try1.bin -v -g 0x0 /dev/ttyUSB0
@@ -65,7 +64,7 @@ Connect wire X9 header top to X5header top right
 
 
 Debugging and uploading
-With the ST-LINK V2
+With the ST-LINK
 
 Disable UART while debugging. No need of reset wire while debugging or flashing with ST-Link
 
