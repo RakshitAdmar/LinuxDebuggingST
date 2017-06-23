@@ -77,6 +77,8 @@ Disable UART while debugging. No need of reset wire while debugging or flashing 
 
                 arm-none-eabi-gdb -tui --eval-command="target remote localhost:3333" ./build/program.elf
 
+Note : In the makefile, in CFLAGS call to GCC, make sure -g is present (While running make from terminal. CBlocks handles this implicitly.) 
+
                 Enter till connection is established
 
 4)Target will need reset. In GDB TUI :-
